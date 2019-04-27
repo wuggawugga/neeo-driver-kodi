@@ -1,0 +1,33 @@
+{
+  "name": "neeo-driver-kodi",
+  "version": "0.0.1",
+  "description": "Kodi driver for NEEO",
+  "main": "index.js",
+  "author": "WuggaWugga",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "bonjour": "^3.5.0",
+    "configstore": "^4.0.0",
+    "mdns-js": "^1.0.1",
+    "neeo-sdk": "^0.53.8",
+    "node-wol": "^0.1.1",
+    "ws": "^5.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clearConfig": "node scripts/clearConfig.js",
+    "showConfig": "node scripts/showConfig.js",
+    "start": "neeo-sdk start"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nklerk/neeo_driver-kodi.git"
+  },
+  "devDependencies": {
+    "var_dump": "^1.0.5"
+  }
+}
