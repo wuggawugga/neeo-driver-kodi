@@ -51,26 +51,10 @@ function buildDevice(service) {
     builder.addButton(args);
   }
 
-/*
-  for(let key in kodiCommands) {
-    //console.log(key);
-    //console.log(kodiCommands[key]);
-    var cmd = kodiCommands[key];
-    let args = { name: key, label: cmd.name };
-    console.log(args);
-//    builder.addButton();
-  }
-*/
-
 //	builder.addButton({ name: 'button-b', label: 'Button B' })
 	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId))
 	.registerInitialiseFunction(() => controller.initialise())
 	.enableDiscovery(DISCOVERY_CONFIG, () => controller.discoverDevices())
-	// This needs to be skipped if the API doesn't require, or have isRegistred return true
-	.enableRegistration(REGISTRATION_CONFIG, {
-		register: (credentials) => controller.register(credentials),
-		isRegistered: () => controller.isRegistered(),
- 	})
 	// ------------------------------------------------------------------------ //
 	return builder;
 }
