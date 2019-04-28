@@ -7,25 +7,28 @@
  */
 
 const neeoapi = require('neeo-sdk');
+const DummyController = require('../lib/DummyController');
 
-const DEVICE_NAME = 'Kodi';
+const DEVICE_NAME = 'Dummy';
 const DEVICE_MANUFACTURER = 'XBMC';
 const DEVICE_TYPE = 'ACCESSORY';
 const DRIVER_VERSION = 1;
-const SEARCH_TOKENS = ['SDK'];
-
-const controller = require('../lib/DummyController');
 
 function buildDevice() {
-	return neeoapi.buildDevice(DEVICE_NAME)
-	.setManufacturer(DEVICE_MANUFACTURER)
+  let controller = new DummyController();
+  let builder = neeoapi.buildDevice(DEVICE_NAME);
+	builder.setManufacturer(DEVICE_MANUFACTURER)
 	.setType(DEVICE_TYPE)
 	.setDriverVersion(DRIVER_VERSION)
-	.addAdditionalSearchToken('SDK')
 	// ------------------------------------------------------------------------ //
 	.addButton({ name: 'button', label: 'Button' })
 	.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId))
 	// ------------------------------------------------------------------------ //
+  return builder;
 }
 const device = buildDevice();
-module.exports = { device };
+module.exports = {
+  devices: [
+    device,
+  ],
+};

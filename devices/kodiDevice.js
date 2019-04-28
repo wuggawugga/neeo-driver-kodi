@@ -7,43 +7,74 @@
  */
 
 const neeoapi = require('neeo-sdk');
+const conf = require('../lib/Configstore');
+const kodiCommands = require('../lib/kodiCommands');
+const KodiController = require('../lib/KodiController');
 
 const DEVICE_NAME = 'Kodi';
 const DEVICE_MANUFACTURER = 'XBMC';
 const DEVICE_TYPE = 'MUSICPLAYER';
 const DRIVER_VERSION = 1;
 const SEARCH_TOKENS = ['SDK', 'ppp'];
-
-const DISCOVERY_CONFIG = {
-  headerText: "NEEO will discover Kodi.",
-  description: 'Make sure to enable: "Announce services to other systems"\r\n"Allow remote control via HTTP" and\r\n"Allow remote control from applications on other systems".\r\n\r\nPres Next to continue.',
-	enableDynamicDeviceBuilder: false
-};
 const REGISTRATION_CONFIG = {
   type: 'ACCOUNT',
-  headerText: 'Header text',
-  description: 'Description'
+  headerText: 'Registration header text',
+  description: 'Registration description'
+};
+const DISCOVERY_CONFIG = {
+	headerText: 'Discovery header text',
+  description: 'Discovery Description',
+	enableDynamicDeviceBuilder: false
 };
 
-const KodiController = require('../lib/KodiController');
-//const controller = KodiController.build();
-const controller = new KodiController();
-
-
-function buildDevice() {
-	console.log('buildDevice');
-	return neeoapi.buildDevice(DEVICE_NAME)
-	.setManufacturer(DEVICE_MANUFACTURER)
-	.setType(DEVICE_TYPE)
-//	.setDriverVersion(DRIVER_VERSION)
-	.addAdditionalSearchToken('SDK')
-	// ------------------------------------------------------------------------ //
-	.addButton({ name: 'button-b', label: 'Button B' })
-	.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId))
-	.registerInitialiseFunction(controller.initialise)
-	.enableDiscovery(DISCOVERY_CONFIG, controller.discover)
-	.enableRegistration(REGISTRATION_CONFIG, { register: controller.register, isRegistered: controller.isRegistered })
-	// ------------------------------------------------------------------------ //
+var kodi_devices = [];
+for (let id in conf.all) {
+	let device = buildDevice(conf.get(id));
+	kodi_devices.push(device);
 }
-const device = buildDevice();
-module.exports = { device };
+
+//console.log(kodiCommands);
+
+function buildDevice(service) {
+	console.log('- Building device:', service.name);
+	const controller = new KodiController(service);
+	var builder = neeoapi.buildDevice('Kodi ' + service.name);
+	builder.setManufacturer(DEVICE_MANUFACTURER).setType(DEVICE_TYPE).setDriverVersion(DRIVER_VERSION);
+	for(let key in SEARCH_TOKENS) {
+    let token = SEARCH_TOKENS[key];
+		builder.addAdditionalSearchToken(token)
+	}
+	// ------------------------------------------------------------------------ //
+
+  for (const [key, cmd] of Object.entries(kodiCommands)) {
+    let args = { name: key, label: cmd.name };
+    builder.addButton(args);
+  }
+
+/*
+  for(let key in kodiCommands) {
+    //console.log(key);
+    //console.log(kodiCommands[key]);
+    var cmd = kodiCommands[key];
+    let args = { name: key, label: cmd.name };
+    console.log(args);
+//    builder.addButton();
+  }
+*/
+
+//	builder.addButton({ name: 'button-b', label: 'Button B' })
+	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId))
+	.registerInitialiseFunction(() => controller.initialise())
+	.enableDiscovery(DISCOVERY_CONFIG, () => controller.discoverDevices())
+	// This needs to be skipped if the API doesn't require, or have isRegistred return true
+	.enableRegistration(REGISTRATION_CONFIG, {
+		register: (credentials) => controller.register(credentials),
+		isRegistered: () => controller.isRegistered(),
+ 	})
+	// ------------------------------------------------------------------------ //
+	return builder;
+}
+
+module.exports = {
+  devices: kodi_devices,
+};
