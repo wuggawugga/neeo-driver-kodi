@@ -23,83 +23,6 @@ const DISCOVERY_CONFIG = {
 	enableDynamicDeviceBuilder: false
 };
 
-// This is a list of keys from lib/kodiCommands to be explicitly included in the driver
-const buttons = [
-  'ASPECTRATIO',
-  'BACKSPACE',
-  'BIGSTEPBACK',
-  'BIGSTEPFORWARD',
-  'CHAPTERORBIGSTEPBACK',
-  'CHAPTERORBIGSTEPFORWARD',
-  'CLOSE',
-  'CONTEXT MENU',
-  'COPY',
-  'CYCLESUBTITLE',
-  'DECREASERATING',
-  'DECREASEVISRATING',
-  'DELETE',
-  'ENTER',
-  'FASTFORWARD',
-  'FULLSCREEN',
-  'GUIPROFILE',
-  'HIGHLIGHT',
-  'HOME',
-  'INCREASERATING',
-  'INCREASEVISRATING',
-  'INFO',
-  'LASTPAGE',
-  'LOCKPRESET',
-  'MOVE',
-  'MOVEITEMDOWN',
-  'MOVEITEMUP',
-  'NEXTCHANNELGROUP',
-  'NEXTPICTURE',
-  'NEXTPRESET',
-  'NEXTSCENE',
-  'PAGEDOWN',
-  'PAGEUP',
-  'PARENTDIR',
-  'PARENTFOLDER',
-  'PLAYERDEBUG',
-  'PLAYLIST',
-  'PLAYPVR',
-  'PLAYPVRRADIO',
-  'PLAYPVRTV',
-  'PREVIOUSCHANNELGROUP',
-  'PREVIOUSMENU',
-  'PREVIOUSPICTURE',
-  'PREVIOUSPRESET',
-  'PREVIOUSSCENE',
-  'QUEUE',
-  'RANDOMPRESET',
-  'RELOADKEYMAPS',
-  'RENAME',
-  'REWIND',
-  'SCANITEM',
-  'SCREENSHOT',
-  'SCROLLDOWN',
-  'SCROLLUP',
-  'SETRATING',
-  'SHOWCODEC',
-  'SHOWOSD',
-  'SHOWPLAYERPROCESSINFO',
-  'SHOWPRESET',
-  'SHOWSUBTITLES',
-  'SHOWTIME',
-  'SHOWVIDEOMENU',
-  'SKIPNEXT',
-  'SKIPPREVIOUS',
-  'SMALLSTEPBACK',
-  'STEPBACK',
-  'STEPFORWARD',
-  'SWITCHPLAYER',
-  'TOGGLEFULLSCREEN',
-  'TOGGLEWATCHED',
-  'ZOOMIN',
-  'ZOOMOUT',
-];
-
-
 function buildDevice() {
 	const controller = new KodiController();
 	var builder = neeoapi.buildDevice(DEVICE_NAME);
@@ -119,9 +42,9 @@ function buildDevice() {
   // TV/PVR buttons
   builder.addButtonGroup('Color Buttons').addButtonGroup('Numpad').addButtonGroup('Channel Zapper').addButtonGroup('Record');
   // Additional buttons
-  buttons.forEach(function(item, index, array) {
+  kodiCommands.enabled_buttons.forEach(function(item, index, array) {
 //    console.log(item);
-    let args = { name: item, label: kodiCommands[item].name };
+    let args = { name: item, label: kodiCommands.buttons[item].name };
 //    console.log(args);
     builder.addButton(args);
   });
