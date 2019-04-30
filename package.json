@@ -18,6 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clearConfig": "node scripts/clearConfig.js",
     "showConfig": "node scripts/showConfig.js",
+    "showCommands": "node scripts/showCommands.js",
     "discover": "node scripts/discover.js",
     "start": "neeo-sdk start"
   },

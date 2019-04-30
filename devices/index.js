@@ -8,12 +8,10 @@
 
 const neeoapi = require('neeo-sdk');
 const kodiDiscovery = require('../lib/kodiDiscovery');
-const dummyDevice = require('./dummyDevice');
 const kodiDevice = require('./kodiDevice');
 
 module.exports = {
   devices: [
-    ...dummyDevice.devices,
     ...kodiDevice.devices
   ]
 };
