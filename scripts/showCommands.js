@@ -6,22 +6,25 @@ const var_dump = require('var_dump');
 // This is a complete list of valid input actions for the v9 API.
 
 var all_actions = [
-/*
+/*  These have direct API methods
   "left",
   "right",
   "up",
   "down",
+  "select",
+  "back",
+  "info",
+  "osd",
+  "codecinfo",
+  "playerprocessinfo",
 */
   "pageup",
   "pagedown",
-//  "select",
   "highlight",
   "parentdir",
   "parentfolder",
-//  "back",
   "menu",
   "previousmenu",
-//  "info",
   "pause",
   "stop",
   "skipnext",
@@ -34,20 +37,16 @@ var all_actions = [
   "bigstepback",
   "chapterorbigstepforward",
   "chapterorbigstepback",
-//  "osd",
   "showsubtitles",
   "nextsubtitle",
   "cyclesubtitle",
   "playerdebug",
-//  "codecinfo",
-//  "playerprocessinfo",
   "nextpicture",
   "previouspicture",
   "zoomout",
   "zoomin",
   "playlist",
   "queue",
-/*
   "zoomnormal",
   "zoomlevel1",
   "zoomlevel2",
@@ -65,9 +64,7 @@ var all_actions = [
   "analogmovey",
   "rotate",
   "rotateccw",
-*/
   "close",
-/*
   "subtitledelayminus",
   "subtitledelay",
   "subtitledelayplus",
@@ -77,14 +74,11 @@ var all_actions = [
   "subtitleshiftup",
   "subtitleshiftdown",
   "subtitlealign",
-*/
   "audionextlanguage",
-/*
   "verticalshiftup",
   "verticalshiftdown",
   "nextresolution",
   "audiotoggledigital",
-*/
   "number0",
   "number1",
   "number2",
@@ -98,7 +92,7 @@ var all_actions = [
   "smallstepback",
   "fastforward",
   "rewind",
-//  "play",
+  "play",
   "playpause",
   "switchplayer",
   "delete",
@@ -115,15 +109,15 @@ var all_actions = [
   "backspace",
   "scrollup",
   "scrolldown",
-//  "analogfastforward",
-//  "analogrewind",
+  "analogfastforward",
+  "analogrewind",
   "moveitemup",
   "moveitemdown",
   "contextmenu",
-//  "shift",
-//  "symbols",
-//  "cursorleft",
-//  "cursorright",
+  "shift",
+  "symbols",
+  "cursorleft",
+  "cursorright",
   "showtime",
   "analogseekforward",
   "analogseekback",
@@ -132,17 +126,16 @@ var all_actions = [
   "previouspreset",
   "lockpreset",
   "randompreset",
-//  "increasevisrating",
-//  "decreasevisrating",
+  "increasevisrating",
+  "decreasevisrating",
   "showvideomenu",
   "enter",
   "increaserating",
   "decreaserating",
   "setrating",
-//  "togglefullscreen",
+  "togglefullscreen",
   "nextscene",
   "previousscene",
-/*
   "nextletter",
   "prevletter",
   "jumpsms2",
@@ -164,14 +157,12 @@ var all_actions = [
   "filtersms8",
   "filtersms9",
   "firstpage",
-*/
   "lastpage",
   "guiprofile",
   "red",
   "green",
   "yellow",
   "blue",
-/*
   "increasepar",
   "decreasepar",
   "volampup",
@@ -186,7 +177,6 @@ var all_actions = [
   "previousstereomode",
   "togglestereomode",
   "stereomodetomono",
-*/
   "channelup",
   "channeldown",
   "previouschannelgroup",
@@ -195,7 +185,6 @@ var all_actions = [
   "playpvrtv",
   "playpvrradio",
   "record",
-/*
   "togglecommskip",
   "showtimerrule",
   "leftclick",
@@ -218,35 +207,33 @@ var all_actions = [
   "swipedown",
   "error",
   "noop"
-*/
 ];
 
 var implemented_actions = [];
 var unimplemented_actions = [];
 var ids = [];
 
-for (const [id, command] of Object.entries(commands)) {
-//  console.log("'"+id.toUpperCase()+"': ", command);
-//  console.log("'"+id.toUpperCase()+"'");
+for (const [id, command] of Object.entries(commands.commands)) {
   ids.push(id.toUpperCase());
   if(command.method == 'Input.ExecuteAction') {
     implemented_actions.push(command.params.action);
-//    console.log('"'+command.params.action+'"');
   }
-//  console.log(id);
 }
 
 all_actions.forEach(function(item, index, array) {
   if(implemented_actions.includes(item)) {
   } else {
     unimplemented_actions.push(item);
-    console.log(item);
   }
 });
 
-//process.stdout.write(ids);
+if(unimplemented_actions.length > 0) {
+  console.log('Unimplemented action IDs:');
+  unimplemented_actions.sort().forEach((item, index, array) => {
+    console.log(item);
+  });
+}
 
-//var_dump(ids.sort());
 ids.sort().forEach(function(item, index, array) {
   process.stdout.write("'"+item+"', \n");
 });

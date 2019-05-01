@@ -9,13 +9,14 @@
 const neeoapi = require('neeo-sdk');
 // ------------------------------------------------------------------------ //
 const conf = require('../lib/Configstore');
+const debug = require('debug')('neeo-driver-kodi:kodiDevice');
 const kodiCommands = require('../lib/kodiCommands');
 const KodiController = require('../lib/KodiController');
 
 const DEVICE_NAME = 'Kodi';
 const DEVICE_MANUFACTURER = 'XBMC';
 const DEVICE_TYPE = 'MUSICPLAYER';
-const DRIVER_VERSION = 3;
+const DRIVER_VERSION = 6;
 const SEARCH_TOKENS = ['SDK', 'ppp'];
 const DISCOVERY_CONFIG = {
 	headerText: 'Kodi Discovery',
@@ -32,33 +33,44 @@ function buildDevice() {
 		builder.addAdditionalSearchToken(token)
 	}
 	// ------------------------------------------------------------------------ //
-  // Power buttons
-  builder.addButtonGroup('Power');
-  // Navigation buttons
-  builder.addButtonGroup('Controlpad').addButtonGroup('Menu and Back');
-  // Media buttons
-  builder.addButtonGroup('Volume').addButtonGroup('Language');
-  builder.addButtonGroup('Transport').addButtonGroup('Transport Search').addButtonGroup('Transport Scan').addButtonGroup('Transport Skip');
-  // TV/PVR buttons
-  builder.addButtonGroup('Color Buttons').addButtonGroup('Numpad').addButtonGroup('Channel Zapper').addButtonGroup('Record');
+  // Button groups
+  builder.addButtonGroup('Power')
+	.addButtonGroup('Controlpad')
+	.addButtonGroup('Menu and Back')
+  .addButtonGroup('Volume')
+	.addButtonGroup('Language')
+  .addButtonGroup('Transport')
+	.addButtonGroup('Transport Search')
+	.addButtonGroup('Transport Scan')
+	.addButtonGroup('Transport Skip')
+	.addButtonGroup('Color Buttons')
+	.addButtonGroup('Numpad')
+	.addButtonGroup('Channel Zapper')
+	.addButtonGroup('Record');
   // Additional buttons
-  kodiCommands.enabled_buttons.forEach(function(item, index, array) {
-//    console.log(item);
-    let args = { name: item, label: kodiCommands.buttons[item].name };
-//    console.log(args);
-    builder.addButton(args);
+  kodiCommands.buttons.forEach(function(item, index, array) {
+		if(kodiCommands.commands[item]) {
+			let args = { name: item, label: kodiCommands.commands[item].name };
+	    builder.addButton(args);
+		} else {
+			debug('Button', item, 'missing');
+		}
   });
-/*
-  for (const [key, cmd] of Object.entries(kodiCommands)) {
-    let args = { name: key, label: cmd.name };
-    builder.addButton(args);
-  }
-*/
-
-//	builder.addButton({ name: 'button-b', label: 'Button B' })
 	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId))
-	.registerInitialiseFunction(() => controller.initialise())
-	.enableDiscovery(DISCOVERY_CONFIG, () => controller.discoverDevices())
+
+	// Directories
+	builder.addDirectory({ name: 'LIBRARY', label: 'Library', role: 'ROOT' }, {
+		getter: (deviceId, params, directory) => controller.browse(deviceId, params, 'root'),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, params, 'root')
+	});
+
+	builder.addDirectory({ name: 'QUEUE', label: 'Queue', role: 'QUEUE' }, {
+		getter: (deviceId, params, directory) => controller.browse(deviceId, params, 'queue'),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, params, 'queue')
+	});
+
+	builder.registerInitialiseFunction(() => controller.initialise());
+	builder.enableDiscovery(DISCOVERY_CONFIG, () => controller.discoverDevices());
 	// ------------------------------------------------------------------------ //
 	return builder;
 }
