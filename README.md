@@ -8,18 +8,18 @@ This is currently done in two stages, either run the driver twice or use discove
 # Changes
 
 * Switched mDNS library to bonjour to align with neeo-sdk
+* Switched WoL library to wake_on_lan
 * Removed auth, since it's not needed for websocket or TCP transports
-* Removed MAC code, since it's not needed
 * Added persistent storage
 * Moved most of the output to debug instead of console
 
 # Improvements and Features
 
-* All the input mapping is in a single file, to make customizing straightforward.
+* All input mapping is in a single file, to make customizing straightforward.
 
 # Caveats and Known Issues
 
-* PVR functions are mostly guesswork
+* PVR functions are mostly guesswork, since I don't have one
 * Buttons included in button groups/widgets are implicitly listed as separate buttons, using their identifies rather than labels
 
 # TODO

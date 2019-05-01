@@ -1,6 +1,6 @@
 {
   "name": "neeo-driver-kodi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Kodi driver for NEEO",
   "main": "index.js",
   "author": "WuggaWugga",
@@ -11,16 +11,16 @@
     "bonjour": "^3.5.0",
     "configstore": "^4.0.0",
     "neeo-sdk": "^0.53.8",
-    "node-wol": "^0.1.1",
+    "netmask": "^1.0.6",
+    "wake_on_lan": "^1.0.0",
     "ws": "^5.2.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "neeo-sdk start",
     "clearConfig": "node scripts/clearConfig.js",
     "showConfig": "node scripts/showConfig.js",
     "showCommands": "node scripts/showCommands.js",
-    "discover": "node scripts/discover.js",
-    "start": "neeo-sdk start"
+    "discover": "node scripts/discover.js"
   },
   "engines": {
     "node": ">=6.0.0"

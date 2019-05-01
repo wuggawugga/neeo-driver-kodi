@@ -16,7 +16,7 @@ const KodiController = require('../lib/KodiController');
 const DEVICE_NAME = 'Kodi';
 const DEVICE_MANUFACTURER = 'XBMC';
 const DEVICE_TYPE = 'MUSICPLAYER';
-const DRIVER_VERSION = 6;
+const DRIVER_VERSION = 7;
 const SEARCH_TOKENS = ['SDK', 'ppp'];
 const DISCOVERY_CONFIG = {
 	headerText: 'Kodi Discovery',
