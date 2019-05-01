@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nklerk/neeo_driver-kodi.git"
+    "url": "https://github.com/wuggawugga/neeo-driver-kodi.git"
   },
   "devDependencies": {
     "debug": "^4.1.1",
