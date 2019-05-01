@@ -34,19 +34,9 @@ function buildDevice() {
 	}
 	// ------------------------------------------------------------------------ //
   // Button groups
-  builder.addButtonGroup('Power')
-	.addButtonGroup('Controlpad')
-	.addButtonGroup('Menu and Back')
-  .addButtonGroup('Volume')
-	.addButtonGroup('Language')
-  .addButtonGroup('Transport')
-	.addButtonGroup('Transport Search')
-	.addButtonGroup('Transport Scan')
-	.addButtonGroup('Transport Skip')
-	.addButtonGroup('Color Buttons')
-	.addButtonGroup('Numpad')
-	.addButtonGroup('Channel Zapper')
-	.addButtonGroup('Record');
+  kodiCommands.button_groups.forEach(function(item, index, array) {
+		builder.addButtonGroup(item);
+	});
   // Additional buttons
   kodiCommands.buttons.forEach(function(item, index, array) {
 		if(kodiCommands.commands[item]) {

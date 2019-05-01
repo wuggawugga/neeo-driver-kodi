@@ -1,28 +1,40 @@
 # Kodi Driver for NEEO
 
-Based on the driver by **Niels de Klerk** [Github](https://github.com/nklerk/)
+This is meant as a platform for "easy" customization and experimentation.
 
-This driver will discover Kodi instances via mDNS and create NEEO devices for each one.
-This is currently done in two stages, either run the driver twice or use discover script first.
+Based on the driver by **Niels de Klerk** [Github](https://github.com/nklerk/neeo_driver-kodi)
 
-# Changes
+### Improvements and Features
+
+* Persistent storage
+* All input mapping is in a single file, to make customizing straightforward.
+* Compartmentalized code for easier experimentation
+
+### Changes
 
 * Switched mDNS library to bonjour to align with neeo-sdk
 * Switched WoL library to wake_on_lan
-* Removed auth, since it's not needed for websocket or TCP transports
-* Added persistent storage
 * Moved most of the output to debug instead of console
 
-# Improvements and Features
-
-* All input mapping is in a single file, to make customizing straightforward.
-
-# Caveats and Known Issues
+### Caveats and Known Issues
 
 * PVR functions are mostly guesswork, since I don't have one
-* Buttons included in button groups/widgets are implicitly listed as separate buttons, using their identifies rather than labels
+* Buttons included in button groups/widgets are implicitly listed as separate buttons, using their identifies rather than label
+* This is just a hack
 
-# TODO
+### TODO
 
 * Add probe function to test for correct API settings
 * Update discovery text in case of wrong API settings
+
+## HOWTO
+
+The [original instructions](https://github.com/nklerk/neeo_driver-kodi/blob/master/README.md#getting-started) are still valid (mostly)
+
+### customization
+
+Edit lib/kodiCommands.js to change input mapping. It defines 4 lists:
+* commands: The master list of available commands. Copy the IDs you want to the "buttons" list below, to have them show up in NEEO.
+* keymap: This translates commands depending on the active window in Kodi.
+* button_groups: This lists the button groups (widgets) to be included in the driver. Comment out the ones you don't want.
+* buttons:  This lists the individual buttons to be included in the driver. Copy IDs from "commands" to include the ones you want.
