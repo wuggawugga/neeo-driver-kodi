@@ -4,10 +4,11 @@ const debug = require('debug')('neeo-driver-kodi:cli');
 const debug_ctrl = require('debug');
 const vorpal = require('vorpal')();
 const chalk = require('chalk');
-const var_dump = require('var_dump');
+const conf = require('../lib/Configstore');
+//const var_dump = require('var_dump');
 
 var neeo_sdk = undefined;
-var driver = undefined;
+var kodiController = undefined;
 var debug_namespaces = getDebugNamespaces();
 var debug_enabled = true;
 
@@ -47,19 +48,12 @@ vorpal
 						debug_namespaces = getDebugNamespaces();
 					}
 					break;
-				case 'on':
-					debug_ctrl.enable(debug_namespaces);
-					debug_enabled = true;
-					break;
-				case 'off':
-					if(debug_enabled) {
-						debug_namespaces = getDebugNamespaces();
-						debug_ctrl.disable();
-						debug_enabled = false;
-					}
-					break;
 				case 'debug':
 					this.log(debug_ctrl);
+					break;
+				default:
+					debug_ctrl.enable(args.strings[0]);
+					debug_namespaces = getDebugNamespaces();
 					break;
 			}
 		} else {
@@ -76,6 +70,13 @@ vorpal
     callback();
   });
 
+vorpal.find('exit').alias('q')
+	.alias('bye')
+	.action(function(args, callback) {
+	console.log('KTHXBAI');
+	process.exit(0);
+	callback();
+});
 
 vorpal
   .command('run', 'Starts the driver')
@@ -85,24 +86,68 @@ vorpal
 		const cwd = process.cwd();
 		process.argv.push('start');
 		neeo_sdk = require('neeo-sdk/dist/cli');
-		driver = require('../lib/KodiController');
+		kodiController = require('../lib/KodiController');
     callback();
+  });
+
+
+/*
+
+*/
+
+var kodi_instances = conf.get('kodi_instances');
+var kodi_ids = [];
+var kodi_names = [];
+var kodi_map = {};
+let i = conf.get('kodi_instances');
+for (const [id, instance] of Object.entries(kodi_instances)) {
+	kodi_ids.push(id);
+	kodi_names.push(instance.name);
+	kodi_map[instance.name] = id;
+}
+
+vorpal
+  .command('show [name]', 'Shows something')
+	.autocomplete(kodi_names)
+  .action(function(args, callback) {
+		if(kodiController) {
+			let s = kodiController.clients[kodi_map[args.name]].state;
+			let kodiState = {
+				state: s.state,
+				media: s.media,
+				players: s.players
+			};
+			console.log(kodiState);
+		}
+  	callback();
   });
 
 vorpal
   .command('test', 'Tests something')
   .action(function(args, callback) {
-//		debug(process);
-		// debug(driver);
-		// var driver2 = require('../lib/KodiController');
-		// debug(driver2);
-		// console.log(driver);
-		// driver.initialise();
-		var foo = require('../lib/Foo');
-		console.log(foo);
+		console.log(vorpal);
   	callback();
   });
 
+var running = true;
+vorpal.on('keypress', function(key, value, e) {
+	let typing = vorpal.ui.input().trim().length > 0;
+	if(key.key == 'space' && !typing) {
+		if(running) {
+			running = false;
+			vorpal.ui.delimiter('* ' + chalk.blue('DEBUG PAUSED') + ' neeo-driver-kodi# ')
+			debug_namespaces = debug_ctrl.disable();
+		} else {
+			running = true;
+			vorpal.ui.delimiter('neeo-driver-kodi# ')
+			debug_ctrl.enable(debug_namespaces);
+		}
+		vorpal.ui.input('');
+	}
+});
+
+console.log('Type "run" to start the driver.');
+console.log('Use [SPACE] to toggle debug output.');
 
 vorpal
   .delimiter('neeo-driver-kodi# ')
