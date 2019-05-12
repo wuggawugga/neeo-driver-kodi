@@ -21,7 +21,7 @@ Based on the driver by **Niels de Klerk** [Github](https://github.com/nklerk/nee
 
 * PVR functions are mostly guesswork, since I don't have one
 * Buttons included in button groups/widgets are implicitly listed as separate buttons, using their identifiers rather than label
-* This is just a hack
+* This is really just a hack
 
 ### TODO
 
@@ -30,6 +30,8 @@ Based on the driver by **Niels de Klerk** [Github](https://github.com/nklerk/nee
 * Maybe a simple web GUI for customization (express is already a dependency via neeo-sdk)
 * Stop communication when recipes are inactive
 * Smarter image scaling to avoid cropping
+* Separate devices for different profiles (Remote-only music player/radio etc.)
+* Lyrics text
 
 ## HOWTO
 

@@ -11,13 +11,13 @@ const neeoapi = require('neeo-sdk');
 //const conf = require('../lib/Configstore');
 const debug = require('debug')('neeo-driver-kodi:kodiDevice');
 const kodiCommands = require('../lib/kodiCommands');
-const KodiController = require('../lib/KodiController');
+const controller = require('../lib/KodiController');
 
 const DEVICE_NAME = 'Kodi';
 const DEVICE_MANUFACTURER = 'XBMC';
 // FIXME: MUSICPLAYER lets me skip cabling in NEEO
 const DEVICE_TYPE = 'MUSICPLAYER';
-const DRIVER_VERSION = 16;
+const DRIVER_VERSION = 18;
 // FIXME: ppp is just easy to type on android keyboard
 const SEARCH_TOKENS = ['SDK', 'ppp'];
 const DISCOVERY_CONFIG = {
@@ -32,7 +32,7 @@ const REGISTRATION_CONFIG = {
 };
 
 function buildDevice() {
-	const controller = new KodiController();
+//	const controller = new KodiController();
 	var builder = neeoapi.buildDevice(DEVICE_NAME);
 	builder.setManufacturer(DEVICE_MANUFACTURER).setType(DEVICE_TYPE).setDriverVersion(DRIVER_VERSION);
 	for(let key in SEARCH_TOKENS) {
@@ -57,29 +57,45 @@ function buildDevice() {
 	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId));
 
 	// Directories
-	builder.addDirectory({ name: 'DIRECTORY_LIBRARY', label: 'Library', role: 'ROOT' }, {
-		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, params, 'DIRECTORY_LIBRARY'),
-		action: (deviceId, params, directory) => controller.listAction(deviceId, params, 'DIRECTORY_LIBRARY')
+	builder.addDirectory({ name: 'DIRECTORY_ROOT', label: 'Library', role: 'ROOT' }, {
+		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_ROOT', params),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_ROOT', params)
+	});
+	builder.addDirectory({ name: 'DIRECTORY_LIBRARY_AUDIO', label: 'Music Library' }, {
+		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_LIBRARY_AUDIO', params),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_LIBRARY_AUDIO', params)
+	});
+	builder.addDirectory({ name: 'DIRECTORY_LIBRARY_VIDEO', label: 'Video Library' }, {
+		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_LIBRARY_VIDEO', params),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_LIBRARY_VIDEO', params)
+	});
+	builder.addDirectory({ name: 'DIRECTORY_FAVOURITES', label: 'Favourites' }, {
+		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_FAVOURITES', params),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_FAVOURITES', params)
+	});
+	builder.addDirectory({ name: 'DIRECTORY_NOW_PLAYING', label: 'Media Info' }, {
+		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_NOW_PLAYING', params),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_NOW_PLAYING', params)
 	});
 	builder.addDirectory({ name: 'DIRECTORY_QUEUE', label: 'Queue', role: 'QUEUE' }, {
-		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, params, 'DIRECTORY_QUEUE'),
-		action: (deviceId, params, directory) => controller.listAction(deviceId, params, 'DIRECTORY_QUEUE')
+		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_QUEUE', params),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_QUEUE', params)
 	});
 /*
-	builder.addDirectory({ name: 'DIRECTORY_NOWPLAYING_ARTWORK', label: 'Artwork' }, {
-		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, params, 'DIRECTORY_NOWPLAYING_ARTWORK'),
-		action: (deviceId, params, directory) => controller.listAction(deviceId, params, 'DIRECTORY_NOWPLAYING_ARTWORK')
+	builder.addDirectory({ name: 'DIRECTORY_NOW_PLAYING_ARTWORK', label: 'Artwork' }, {
+		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, params, 'DIRECTORY_NOW_PLAYING_ARTWORK'),
+		action: (deviceId, params, directory) => controller.listAction(deviceId, params, 'DIRECTORY_NOW_PLAYING_ARTWORK')
 	});
-*/	
+*/
 	// Sensors
 	// builder.addSensor({ name: 'SENSOR_TITLE', type: 'string' }, { getter: (deviceId, foo) => controller.sensorValue });
   // builder.addSensor({ name: 'SENSOR_DESCRIPTION', type: 'string' }, { getter: (deviceId, foo) => controller.sensorValue });
 	//
-	builder.addTextLabel({ name: 'LABEL_NOWPLAYING_CAPTION', label: 'Now Playing Title', isLabelVisible: false }, (device_id) => controller.getTextLabel(device_id, 'LABEL_NOWPLAYING_CAPTION') );
-	builder.addTextLabel({ name: 'LABEL_NOWPLAYING_DESCRIPTION', label: 'Now Playing Description', isLabelVisible: false }, (device_id) => controller.getTextLabel(device_id, 'LABEL_NOWPLAYING_DESCRIPTION') );
+	builder.addTextLabel({ name: 'LABEL_NOW_PLAYING_CAPTION', label: 'Now Playing Title', isLabelVisible: false }, (device_id) => controller.getTextLabel(device_id, 'LABEL_NOW_PLAYING_CAPTION') );
+	builder.addTextLabel({ name: 'LABEL_NOW_PLAYING_DESCRIPTION', label: 'Now Playing Description', isLabelVisible: false }, (device_id) => controller.getTextLabel(device_id, 'LABEL_NOW_PLAYING_DESCRIPTION') );
 
-	builder.addImageUrl({ name: 'IMAGE_NOWPLAYING_THUMBNAIL_LARGE', label: 'Now Playing Thumbnail Large', size: 'large' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOWPLAYING_THUMBNAIL_LARGE'));
-	builder.addImageUrl({ name: 'IMAGE_NOWPLAYING_THUMBNAIL_SMALL', label: 'Now Playing Thumbnail Small', size: 'small' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOWPLAYING_THUMBNAIL_SMALL'));
+	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE', label: 'Now Playing Thumbnail Large', size: 'large' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE'));
+	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL', label: 'Now Playing Thumbnail Small', size: 'small' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL'));
 
 	builder.registerSubscriptionFunction((updateCallback, optionalCallbacks) => controller.setNotificationCallbacks(updateCallback, optionalCallbacks));
 	builder.registerInitialiseFunction(() => controller.initialise());

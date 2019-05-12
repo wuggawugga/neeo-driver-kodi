@@ -15,7 +15,6 @@ const conf = require('../lib/Configstore');
 const kodiDiscovery = require('../lib/kodiDiscovery');
 const httpInterface = require('../lib/httpInterface');
 const Netmask = require('netmask').Netmask;
-require('../lib/Foo');
 
 neeoapi.discoverOneBrain(true).then((brain) => {
   conf.set('brain', brain);
