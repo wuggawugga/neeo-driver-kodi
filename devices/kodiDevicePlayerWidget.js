@@ -8,7 +8,7 @@
 
 const neeoapi = require('neeo-sdk');
 // ------------------------------------------------------------------------ //
-//const conf = require('../lib/Configstore');
+//const conf = require('../lib/Config');
 const debug = require('debug')('neeo-driver-kodi:kodiDevice');
 const kodiCommands = require('../lib/kodiCommands');
 const controller = require('../lib/KodiController');

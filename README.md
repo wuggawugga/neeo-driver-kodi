@@ -2,7 +2,7 @@
 
 This is meant as a platform for "easy" customization and experimentation.
 
-Based on the driver by **Niels de Klerk** [Github](https://github.com/nklerk/neeo_driver-kodi)
+Based on the [driver](https://github.com/nklerk/neeo_driver-kodi) by **Niels de Klerk**
 
 ### Improvements and Features
 
@@ -39,9 +39,9 @@ The [original instructions](https://github.com/nklerk/neeo_driver-kodi/blob/mast
 
 ### Configuration
 
-* Important settings are all in lib/Configstore.js
-* Input mapping is done in lib/kodiCommands.js
-* Directory/library mapping is in lib/KodiBrowserTree.js
+* Important settings are all in `lib/Config.js`
+* Input mapping is done in `lib/kodiCommands.js`
+* Directory/library mapping is in `lib/KodiBrowserTree.js`
 
 ### Customization
 

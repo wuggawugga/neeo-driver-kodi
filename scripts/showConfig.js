@@ -1,4 +1,4 @@
-const conf = require('../lib/Configstore');
+const conf = require('../lib/Config');
 const var_dump = require('var_dump');
 
 console.log('Config has ' + conf.size + ' items');

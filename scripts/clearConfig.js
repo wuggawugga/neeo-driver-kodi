@@ -1,3 +1,3 @@
-const conf = require('../lib/Configstore');
+const conf = require('../lib/Config');
 conf.clear();
 console.log('Configuration store cleared');

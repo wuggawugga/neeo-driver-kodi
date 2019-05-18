@@ -4,7 +4,7 @@ const debug = require('debug')('neeo-driver-kodi:cli');
 const debug_ctrl = require('debug');
 const vorpal = require('vorpal')();
 const chalk = require('chalk');
-const conf = require('../lib/Configstore');
+const conf = require('../lib/Config');
 //const var_dump = require('var_dump');
 
 var neeo_sdk = undefined;
