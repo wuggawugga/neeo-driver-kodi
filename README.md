@@ -51,6 +51,18 @@ Edit lib/kodiCommands.js to change input mapping. It defines 4 lists:
 * button_groups: This lists the button groups (widgets) to be included in the driver. Comment out the ones you don't want.
 * buttons:  This lists the individual buttons to be included in the driver. Copy IDs from "commands" to include the ones you want.
 
+### Hacking
+
+The driver outputs a lot of debugging info using the `debug` system. Each class has its own debug context plus a separate one for data.
+For all debug info minus data, use `DEBUG=neeo-driver-kodi:*,-*:data`
+The CLI and HTTP interfaces also expose some useful data.
+A few NPM scripts are provided:
+* showConfig - Dumps the contents of the configstore
+* clearConfig - Clears the configstore
+* discover - Runs the discovery process on its own
+* cli - Attempt at an interactive debugging CLI
+* web - Runs the HTTP interface on its own
+
 #### Dependencies
 
 * axios - NEEO dependency - HTTP client
