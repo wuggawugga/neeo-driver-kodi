@@ -25,6 +25,8 @@ Based on the [driver](https://github.com/nklerk/neeo_driver-kodi) by **Niels de 
 
 ### Wishlist
 
+* More robust API connections (error handling, queueing, http/ws fallback etc.)
+* UDP events support https://kodi.wiki/view/EventServer
 * Probe function to test for correct API settings
 * Update discovery text in case of wrong API settings
 * Maybe a simple web GUI for customization
@@ -65,12 +67,13 @@ A few NPM scripts are provided:
 
 #### Dependencies
 
-* axios - NEEO dependency - HTTP client
-* bluebird - NEEO dependency - Promises implementation
-* bonjour - NEEO dependency - Zeroconf/mDNS
+* axios - HTTP client - Via NEEO
+* bluebird - Promises implementation - Via NEEO
+* bonjour - Zeroconf/mDNS - Via NEEO
 * configstore - Persistent configuration storage
-* debug - NEEO dependency - Debugging
-* express - NEEO dependency - Web framework
+* debug - Debugging - Via NEEO
+* dotProp - Dot-notation shortcut - Via configstore
+* express - Web framework - Via NEEO
 * neeo-sdk
 * netmask - IP calculations
 * receptacle - In-memory cache
