@@ -4,18 +4,23 @@ This is meant as a platform for "easy" customization and experimentation.
 
 Based on the [driver](https://github.com/nklerk/neeo_driver-kodi) by **Niels de Klerk**
 
+Kodi has a lot of features to cram into the NEEO remote. Whether you want a huge NEEO recipe with discrete buttons for every single Kodi action or a just simple recipe for music alone, it quickly gets tricky to navigate all the possibilities.
+This driver aims to make it easier to try out different options and features.
+
 ### Improvements and Features
 
-* Persistent storage
-* Image resizing and caching web service
-* All input mapping is in a single file, to make customizing straightforward.
-* Compartmentalized code for easier experimentation
+* Persistent configuration storage
+* In-memory on-demand image resizing and caching web service
+* Configuration is defined in a single file
+* Buttons and commands are defined in a single file
+* Keymap is in a single file
 
 ### Changes
 
-* Switched mDNS library to bonjour to align with neeo-sdk
-* Switched WoL library to wake_on_lan
-* Moved most of the output to debug instead of console
+* Changed out mDNS and WoL packages to align with existing neeo-sdk dependencies
+* Lots of debugging info using debug channels
+* Dual-transport API client
+* Compartmentalized code for easier experimentation
 
 ### Caveats and Known Issues
 

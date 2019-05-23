@@ -29,7 +29,8 @@
     "showCommands": "node scripts/showCommands.js",
     "discover": "node scripts/discover.js",
     "web": "node scripts/web.js",
-    "cli": "node --inspect scripts/cli.js"
+    "cli": "node --inspect scripts/cli.js",
+    "test": "node scripts/test.js"
   },
   "engines": {
     "node": ">=6.0.0"

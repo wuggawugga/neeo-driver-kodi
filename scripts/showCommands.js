@@ -1,10 +1,11 @@
 'use strict';
 
+// Just some housekeeping stuff for commands and keymaps
+
 const commands = require('../lib/kodiCommands');
 const var_dump = require('var_dump');
 
 // This is a complete list of valid input actions for the v9 API.
-
 var all_actions = [
 /*  These have direct API methods
   "left",
@@ -209,11 +210,132 @@ var all_actions = [
   "noop"
 ];
 
+	// * https://kodi.wiki/view/JSON-RPC_API/v9#GUI.Window
+var api_windows = [
+  "home",
+  "programs",
+  "pictures",
+  "filemanager",
+  "settings",
+  "music",
+  "videos",
+  "tvchannels",
+  "tvrecordings",
+  "tvguide",
+  "tvtimers",
+  "tvsearch",
+  "radiochannels",
+  "radiorecordings",
+  "radioguide",
+  "radiotimers",
+  "radiosearch",
+  "gamecontrollers",
+  "pvrguideinfo",
+  "pvrrecordinginfo",
+  "pvrradiordsinfo",
+  "pvrtimersetting",
+  "pvrgroupmanager",
+  "pvrchannelmanager",
+  "pvrguidesearch",
+  "pvrchannelscan",
+  "pvrupdateprogress",
+  "pvrosdchannels",
+  "pvrosdguide",
+  "pvrosdteletext",
+  "systeminfo",
+  "testpattern",
+  "screencalibration",
+  "systemsettings",
+  "servicesettings",
+  "pvrsettings",
+  "playersettings",
+  "mediasettings",
+  "interfacesettings",
+  "appearancesettings",
+  "videoplaylist",
+  "loginscreen",
+  "profiles",
+  "skinsettings",
+  "addonbrowser",
+  "yesnodialog",
+  "progressdialog",
+  "virtualkeyboard",
+  "volumebar",
+  "submenu",
+  "favourites",
+  "contextmenu",
+  "notification",
+  "numericinput",
+  "gamepadinput",
+  "shutdownmenu",
+  "playercontrols",
+  "playerprocessinfo",
+  "seekbar",
+  "musicosd",
+  "addonsettings",
+  "visualisationpresetlist",
+  "osdcmssettings",
+  "osdvideosettings",
+  "osdaudiosettings",
+  "audiodspmanager",
+  "osdaudiodspsettings",
+  "videobookmarks",
+  "filebrowser",
+  "networksetup",
+  "mediasource",
+  "profilesettings",
+  "locksettings",
+  "contentsettings",
+  "songinformation",
+  "smartplaylisteditor",
+  "smartplaylistrule",
+  "busydialog",
+  "pictureinfo",
+  "accesspoints",
+  "fullscreeninfo",
+  "sliderdialog",
+  "addoninformation",
+  "subtitlesearch",
+  "musicplaylist",
+  "musicplaylisteditor",
+  "teletext",
+  "selectdialog",
+  "musicinformation",
+  "okdialog",
+  "movieinformation",
+  "textviewer",
+  "fullscreenvideo",
+  "fullscreenlivetv",
+  "fullscreenradio",
+  "visualisation",
+  "slideshow",
+  "weather",
+  "screensaver",
+  "videoosd",
+  "videomenu",
+  "videotimeseek",
+  "startwindow",
+  "startup",
+  "peripheralsettings",
+  "extendedprogressdialog",
+  "mediafilter",
+  "addon",
+  "eventlog",
+  "tvtimerrules",
+  "radiotimerrules"
+];
+
+
+
+/*
+ *  Check for unimplemeted actions
+ */
+
 var implemented_actions = [];
 var unimplemented_actions = [];
 var ids = [];
 
-for (const [id, command] of Object.entries(commands.commands)) {
+for(const [id, command] of Object.entries(commands.commands)) {
   ids.push(id.toUpperCase());
   if(command.method == 'Input.ExecuteAction') {
     implemented_actions.push(command.params.action);
@@ -229,11 +351,23 @@ all_actions.forEach(function(item, index, array) {
 
 if(unimplemented_actions.length > 0) {
   console.log('Unimplemented action IDs:');
+  console.log(unimplemented_actions.sort().join(', '));
+/*
   unimplemented_actions.sort().forEach((item, index, array) => {
     console.log(item);
   });
+*/
 }
 
-ids.sort().forEach(function(item, index, array) {
-  process.stdout.write("'"+item+"', \n");
-});
+// ids.sort().forEach(function(item, index, array) {
+//   process.stdout.write("'"+item+"', \n");
+// });
+
+/*
+ *  Check for keymap references
+ */
+
+
+/*
+ *  Check for GUI.ActivateWindow coverage
+ */
