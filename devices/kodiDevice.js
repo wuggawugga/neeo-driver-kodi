@@ -17,12 +17,12 @@ const DEVICE_NAME = 'Kodi';
 const DEVICE_MANUFACTURER = 'XBMC';
 // FIXME: MUSICPLAYER lets me skip cabling in NEEO
 const DEVICE_TYPE = 'MUSICPLAYER';
-const DRIVER_VERSION = 27;
+const DRIVER_VERSION = 28;
 // FIXME: ppp is just easy to type on android keyboard
 const SEARCH_TOKENS = ['SDK', 'ppp'];
 const DISCOVERY_CONFIG = {
 	headerText: 'Kodi Discovery',
-  description: 'Your Kodi instances will appear here',
+  description: 'Your Kodi instances will appear here. The next authentication might be automatically skipped.',
 	enableDynamicDeviceBuilder: false
 };
 const REGISTRATION_CONFIG = {
