@@ -31,12 +31,13 @@ This driver aims to make it easier to try out different options and features.
 ### Wishlist
 
 * More robust API connections (error handling, queueing, http/ws fallback etc.)
-* UDP events support https://kodi.wiki/view/EventServer
+* Better image scaling solution (NEEO seems to refuse displaying quite a few images)
+* Smarter image scaling to avoid cropping
+* UDP events support for lower latency https://kodi.wiki/view/EventServer
 * Probe function to test for correct API settings
 * Update discovery text in case of wrong API settings
 * Maybe a simple web GUI for customization
 * Stop communication when recipes are inactive
-* Smarter image scaling to avoid cropping
 * Separate devices for different profiles (Remote-only music player/radio etc.)
 * Lyrics text
 
