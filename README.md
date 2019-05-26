@@ -16,6 +16,7 @@ Keymap: The code may be complete. I have only bothered to add the cursor keys. A
 Sensors: Images, labels switches and sliders are working. Currently I have just implemented those needed to try the new media player widget.
 Directories: Basic functionality is working, and it's now quite easy to extend.
 Image cache: It works, but it's not perfect. Just disable it if you have any issues.
+Wake-on-LAN: The code should work, but I haven't really tested this.
 
 ### Improvements and Features
 
@@ -59,7 +60,8 @@ The [original instructions](https://github.com/nklerk/neeo_driver-kodi/blob/mast
 
 * Important settings are all in `lib/Config.js`
 * Input mapping is done in `lib/kodiCommands.js`
-* Directory/library mapping is in `lib/KodiBrowserTree.js`
+* Keymap in in `lib/kodiCommands.js`
+* Basic directory/library mapping is in `lib/KodiBrowserTree.js`
 
 ### Customization
 
