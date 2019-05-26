@@ -7,13 +7,23 @@ Based on the [driver](https://github.com/nklerk/neeo_driver-kodi) by **Niels de 
 Kodi has a lot of features to cram into the NEEO remote. Whether you want a huge NEEO recipe with discrete buttons for every single Kodi action or a just simple recipe for music alone, it quickly gets tricky to navigate all the possibilities.
 This driver aims to make it easier to try out different options and features.
 
+Ultimately I hope to include several "devices" tailored for different tasks.
+
+## status
+
+Widgets and buttons: Should be functionally complete. Just needs testing and tweaking.
+Keymap: The code may be complete. I have only bothered to add the cursor keys. Adding more should be trivial.
+Sensors: Images, labels switches and sliders are working. Currently I have just implemented those needed to try the new media player widget.
+Directories: Basic functionality is working, and it's now quite easy to extend.
+Image cache: It works, but it's not perfect. Just disable it if you have any issues.
+
 ### Improvements and Features
 
 * Persistent configuration storage
 * In-memory on-demand image resizing and caching web service
 * Configuration is defined in a single file
 * Buttons and commands are defined in a single file
-* Keymap is in a single file
+* Keymap is in a single file (AKA Content-aware commands)
 
 ### Changes
 
@@ -24,22 +34,22 @@ This driver aims to make it easier to try out different options and features.
 
 ### Caveats and Known Issues
 
-* PVR functions are mostly missing or just plain guesswork, since I don't have one.
-* Buttons included in button groups/widgets are implicitly added as separate buttons, using their identifiers rather than label.
+* I don't have a PVR solution, so TV/Radio/PVR stuff is mostly guesswork on my part.
+* Buttons included in button groups/widgets are implicitly added as discrete buttons, using their identifiers rather than label.
 * This is really just a hack
 
 ### Wishlist
 
-* More robust API connections (error handling, queueing, http/ws fallback etc.)
-* Better image scaling solution (NEEO seems to refuse displaying quite a few images)
+* More robust API connections (error handling, queueing, http/ws fallback etc.) - This is less of an issue after I added HTTP.
+* Better image handling (NEEO seems to refuse loading some images)
 * Smarter image scaling to avoid cropping
-* UDP events support for lower latency https://kodi.wiki/view/EventServer
+* Maybe UDP keystroke events for lower latency https://kodi.wiki/view/EventServer
 * Probe function to test for correct API settings
 * Update discovery text in case of wrong API settings
 * Maybe a simple web GUI for customization
 * Stop communication when recipes are inactive
 * Separate devices for different profiles (Remote-only music player/radio etc.)
-* Lyrics text
+* More keymap entries
 
 ## HOWTO
 
