@@ -7,7 +7,9 @@ Based on the [driver](https://github.com/nklerk/neeo_driver-kodi) by **Niels de 
 Kodi has a lot of features to cram into the NEEO remote. Whether you want a huge NEEO recipe with discrete buttons for every single Kodi action or a just simple recipe for music alone, it quickly gets tricky to navigate all the possibilities.
 This driver aims to make it easier to try out different options and features.
 
-Ultimately I hope to include several "devices" tailored for different tasks.
+Ultimately I hope to include several "devices" tailored for different profiles.
+
+This driver is so far being tested with Nvidia Shield and OSMC Vero 2 devices.
 
 ## status
 
