@@ -9,13 +9,16 @@
  */
 
 const neeoapi = require('neeo-sdk');
-const kodiDevice = require('./kodiDevice');
 const os = require('os');
 const conf = require('../lib/Config');
-const kodiDiscovery = require('../lib/kodiDiscovery');
-const httpInterface = require('../lib/httpInterface');
 const Netmask = require('netmask').Netmask;
 const http = require('http');
+const kodiDiscovery = require('../lib/kodiDiscovery');
+const httpInterface = require('../lib/httpInterface');
+
+const kodiDevice = require('./master');
+const kodiDevice = require('./headlessAudio');
+const kodiDevice = require('./playerWidget');
 
 var instances = conf.get('kodi_instances');
 
