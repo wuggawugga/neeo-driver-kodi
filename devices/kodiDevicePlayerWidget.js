@@ -1,24 +1,21 @@
 'use strict';
 
 /*
- * This should hopefully end up as a sort of template for device definitions.
- * Common stuff is defined as constants at the top.
- * Just change the controller name and finish buildDevice()
+ * This is a device using the media player widget
  */
 
 const neeoapi = require('neeo-sdk');
 // ------------------------------------------------------------------------ //
-//const conf = require('../lib/Config');
 const debug = require('debug')('neeo-driver-kodi:kodiDevice');
 const kodiCommands = require('../lib/kodiCommands');
 const controller = require('../lib/KodiController');
 
-const DEVICE_NAME = 'Kodi Player';
+const DEVICE_NAME = 'Kodi (Media player)';
 const DEVICE_MANUFACTURER = 'XBMC';
 // FIXME: MUSICPLAYER lets me skip cabling in NEEO
 const DEVICE_TYPE = 'MUSICPLAYER';
-const DRIVER_VERSION = 2;
-// FIXME: ppp is just easy to type on android keyboard
+const DRIVER_VERSION = 4;
+// FIXME: ppp is just something easy to type on the android keyboard
 const SEARCH_TOKENS = ['SDK', 'ppp'];
 const DISCOVERY_CONFIG = {
 	headerText: 'Kodi Discovery',
@@ -43,7 +40,7 @@ function buildDevice() {
 	builder.addPlayerWidget({
 	  rootDirectory: {
 	    name: 'DIRECTORY_ROOT', // Optional: will default to ROOT_DIRECTORY
-//	    label: 'My Library', // Optional: will default to ROOT
+	    label: 'My Library', // Optional: will default to ROOT
 	    controller: {
 				getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_ROOT', params),
 				action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_ROOT', params)
@@ -52,7 +49,7 @@ function buildDevice() {
 	  // Optional:
 	  queueDirectory: {
 	    name: 'DIRECTORY_QUEUE', // Optional: will default to QUEUE_DIRECTORY
-//	    label: 'Queue', // Optional: will default to QUEUE
+	    label: 'Queue', // Optional: will default to QUEUE
 	    controller: {
 				getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_QUEUE', params),
 				action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_QUEUE', params)

@@ -10,6 +10,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.4",
     "bonjour": "^3.5.0",
+    "caller-id": "^0.1.0",
     "configstore": "^4.0.0",
     "debug": "^4.1.1",
     "express": "^4.16.4",

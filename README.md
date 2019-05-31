@@ -11,28 +11,29 @@ Ultimately I hope to include several "devices" tailored for different profiles.
 
 This driver is so far being tested with Nvidia Shield and OSMC Vero 2 devices.
 
-## status
+Documentation will be in the [Wiki](https://github.com/wuggawugga/neeo-driver-kodi/wiki)
 
-Widgets and buttons: Should be functionally complete. Just needs testing and tweaking.
-Keymap: The code may be complete. I have only bothered to add the cursor keys. Adding more should be trivial.
-Sensors: Images, labels switches and sliders are working. Currently I have just implemented those needed to try the new media player widget.
-Directories: Basic functionality is working, and it's now quite easy to extend.
-Image cache: It works, but it's not perfect. Just disable it if you have any issues.
-Wake-on-LAN: The code should work, but I haven't really tested this.
+## Status
+
+Currently the code is fairly (functionally) complete. I have formalized many features, so adding more can be done with basically copy and paste.
+
+* Widgets and buttons: Should be functionally complete. Just needs testing and tweaking.
+* Keymap: The code may be complete. I have only bothered to add the cursor keys. Adding more should be trivial.
+* Sensors: Images, labels switches and sliders are working. Currently I have just implemented those needed to try the media player widget.
+* Directories: Basic functionality is working, and it's now quite easy to extend.
+* Image cache: It works, but it's not quite perfect (let alone elegant). Just disable it if you have any issues.
+* Wake-on-LAN: The code has been extended and should work, but I haven't really tested this.
 
 ### Improvements and Features
 
 * Persistent configuration storage
 * In-memory on-demand image resizing and caching web service
+* Dual-transport API client
 * Configuration is defined in a single file
 * Buttons and commands are defined in a single file
 * Keymap is in a single file (AKA Content-aware commands)
-
-### Changes
-
 * Changed out mDNS and WoL packages to align with existing neeo-sdk dependencies
 * Lots of debugging info using debug channels
-* Dual-transport API client
 * Compartmentalized code for easier experimentation
 
 ### Caveats and Known Issues
@@ -53,10 +54,18 @@ Wake-on-LAN: The code should work, but I haven't really tested this.
 * Stop communication when recipes are inactive
 * Separate devices for different profiles (Remote-only music player/radio etc.)
 * More keymap entries
+* Companion Kodi add-on for total GUI control.
 
 ## HOWTO
 
-The [original instructions](https://github.com/nklerk/neeo_driver-kodi/blob/master/README.md#getting-started) are still valid (mostly)
+The [original instructions](https://github.com/nklerk/neeo_driver-kodi/blob/master/README.md#getting-started) are still valid (mostly).
+
+# Install Node
+# Clone or download this code
+# Unpack code and run `npm install`
+# Start with `npm start`
+
+Problems are usually fixed by restarting (Ctrl+C, npm start) and/or resetting the configuration (`npm run clearConfig`).
 
 ### Configuration
 

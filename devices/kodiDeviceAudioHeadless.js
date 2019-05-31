@@ -1,9 +1,7 @@
 'use strict';
 
 /*
- * This should hopefully end up as a sort of template for device definitions.
- * Common stuff is defined as constants at the top.
- * Just change the controller name and finish buildDevice()
+ * This is a device optimized for music only, wihout the need for a screen
  */
 
 const neeoapi = require('neeo-sdk');
@@ -12,11 +10,10 @@ const debug = require('debug')('neeo-driver-kodi:kodiDevice');
 const kodiCommands = require('../lib/kodiCommands');
 const controller = require('../lib/KodiController');
 
-const DEVICE_NAME = 'Kodi (Master)';
+const DEVICE_NAME = 'Kodi (Audio headless)';
 const DEVICE_MANUFACTURER = 'XBMC';
-// FIXME: MUSICPLAYER lets me skip cabling in NEEO
 const DEVICE_TYPE = 'MUSICPLAYER';
-const DRIVER_VERSION = 29;
+const DRIVER_VERSION = 1;
 // FIXME: ppp is just something easy to type on the android keyboard
 const SEARCH_TOKENS = ['SDK', 'ppp'];
 const DISCOVERY_CONFIG = {
@@ -30,6 +27,31 @@ const REGISTRATION_CONFIG = {
 	description: 'Please enter the credentials for your Kodi instance. If your instance does not use authentication, just enter random values.',
 };
 
+// Copied from lib/kodiCommands
+const button_groups = [
+	'Power',
+	'Controlpad',
+	'Menu and Back',
+	'Volume',
+	'Transport',
+	'Transport Search',
+	'Transport Scan',
+	'Transport Skip',
+];
+
+// Copied from lib/kodiCommands
+const buttons = [
+	'CMD_UP',
+	'CMD_DOWN',
+	'CMD_LEFT',
+	'CMD_RIGHT',
+	'CMD_SELECT',
+	'CMD_ENTER',
+	'CMD_MENU',
+	'CMD_BACK',
+	'CMD_CLOSE',
+];
+
 function buildDevice() {
 
 	var builder = neeoapi.buildDevice(DEVICE_NAME);
@@ -42,12 +64,12 @@ function buildDevice() {
 	// ------------------------------------------------------------------------ //
 
   // Button groups
-  kodiCommands.button_groups.forEach(function(item, index, array) {
+  button_groups.forEach(function(item, index, array) {
 		builder.addButtonGroup(item);
 	});
 
   // Additional buttons
-  kodiCommands.buttons.forEach(function(item, index, array) {
+  buttons.forEach(function(item, index, array) {
 		if(kodiCommands.commands[item]) {
 			let args = { name: item, label: kodiCommands.commands[item].name };
 	    builder.addButton(args);
@@ -58,10 +80,6 @@ function buildDevice() {
 	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId));
 
 	// Directories
-	builder.addDirectory({ name: 'DIRECTORY_ROOT', label: 'Library', role: 'ROOT' }, {
-		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_ROOT', params),
-		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_ROOT', params)
-	});
 	builder.addDirectory({ name: 'DIRECTORY_QUEUE', label: 'Queue', role: 'QUEUE' }, {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_QUEUE', params),
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_QUEUE', params)
@@ -69,10 +87,6 @@ function buildDevice() {
 	builder.addDirectory({ name: 'DIRECTORY_LIBRARY_AUDIO', label: 'Music Library' }, {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_LIBRARY_AUDIO', params),
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_LIBRARY_AUDIO', params)
-	});
-	builder.addDirectory({ name: 'DIRECTORY_LIBRARY_VIDEO', label: 'Video Library' }, {
-		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_LIBRARY_VIDEO', params),
-		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_LIBRARY_VIDEO', params)
 	});
 	builder.addDirectory({ name: 'DIRECTORY_FAVOURITES', label: 'Favourites' }, {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_FAVOURITES', params),
@@ -82,8 +96,6 @@ function buildDevice() {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_NOW_PLAYING', params),
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_NOW_PLAYING', params)
 	});
-
-
 
 	builder.addSlider({ name: 'SLIDER_VOLUME', label: 'Volume', range: [0, 100], unit: '%' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SLIDER_VOLUME', value), getter: (device_id) => controller.getSensorValue(device_id, 'SLIDER_VOLUME') });
 	builder.addSwitch({ name: 'SWITCH_MUTE', label: 'Mute' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_MUTE', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_MUTE') });
