@@ -9,13 +9,16 @@
  */
 
 const neeoapi = require('neeo-sdk');
-const kodiDevice = require('./kodiDevice');
 const os = require('os');
 const conf = require('../lib/Config');
-const kodiDiscovery = require('../lib/kodiDiscovery');
-const httpInterface = require('../lib/httpInterface');
 const Netmask = require('netmask').Netmask;
 const http = require('http');
+const kodiDiscovery = require('../lib/kodiDiscovery');
+const httpInterface = require('../lib/httpInterface');
+
+const master = require('./master');
+const headlessAudio = require('./headlessAudio');
+const playerWidget = require('./playerWidget');
 
 var instances = conf.get('kodi_instances');
 
@@ -100,6 +103,8 @@ function sillyWalk(recipes) {
 
 module.exports = {
   devices: [
-    ...kodiDevice.devices
+    ...master.devices,
+    ...headlessAudio.devices,
+    ...playerWidget.devices,
   ]
 };
