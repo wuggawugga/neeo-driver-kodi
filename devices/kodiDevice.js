@@ -78,12 +78,10 @@ function buildDevice() {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_FAVOURITES', params),
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_FAVOURITES', params)
 	});
-	builder.addDirectory({ name: 'DIRECTORY_NOW_PLAYING', label: 'Media Info' }, {
+	builder.addDirectory({ name: 'DIRECTORY_NOW_PLAYING', label: 'Now Playing' }, {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_NOW_PLAYING', params),
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_NOW_PLAYING', params)
 	});
-
-
 
 	builder.addSlider({ name: 'SLIDER_VOLUME', label: 'Volume', range: [0, 100], unit: '%' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SLIDER_VOLUME', value), getter: (device_id) => controller.getSensorValue(device_id, 'SLIDER_VOLUME') });
 	builder.addSwitch({ name: 'SWITCH_MUTE', label: 'Mute' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_MUTE', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_MUTE') });

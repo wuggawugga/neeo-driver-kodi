@@ -92,7 +92,7 @@ function buildDevice() {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_FAVOURITES', params),
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_FAVOURITES', params)
 	});
-	builder.addDirectory({ name: 'DIRECTORY_NOW_PLAYING', label: 'Media Info' }, {
+	builder.addDirectory({ name: 'DIRECTORY_NOW_PLAYING', label: 'Now Playing' }, {
 		getter: (deviceId, params, directory) => controller.browseDirectory(deviceId, 'DIRECTORY_NOW_PLAYING', params),
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_NOW_PLAYING', params)
 	});
