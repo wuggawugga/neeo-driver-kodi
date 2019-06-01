@@ -65,9 +65,9 @@ function buildDevice() {
 	  shuffleController: { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_SHUFFLE', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_SHUFFLE') },
 	  repeatController: { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_REPEAT', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_REPEAT') },
 	});
-	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId));
+	builder.addButtonHandler((name, deviceId) => kodiDevice.onButtonPressed(name, deviceId));
 
-	builder.registerSubscriptionFunction((updateCallback, optionalCallbacks) => controller.setNotificationCallbacks(updateCallback, optionalCallbacks, builder.deviceidentifier) );
+	builder.registerSubscriptionFunction((updateCallback, optionalCallbacks) => kodiDevice.setNotificationCallbacks(updateCallback, optionalCallbacks, builder.deviceidentifier) );
 	builder.registerInitialiseFunction(() => controller.initialise());
 	builder.enableRegistration(REGISTRATION_CONFIG, { register: (credentials) => controller.register(credentials), isRegistered: (foo, bar) => controller.isRegistered(foo, bar) } );
 	builder.enableDiscovery(DISCOVERY_CONFIG, () => controller.discoverDevices());

@@ -79,7 +79,7 @@ function buildDevice() {
 			debug('Button', item, 'missing');
 		}
   });
-	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId));
+	builder.addButtonHandler((name, deviceId) => kodiDevice.onButtonPressed(name, deviceId));
 
 	// Directories
 	builder.addDirectory({ name: 'DIRECTORY_QUEUE', label: 'Queue', role: 'QUEUE' }, {
@@ -111,7 +111,7 @@ function buildDevice() {
 	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE', label: 'Now Playing Thumbnail Large', size: 'large' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE'));
 	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL', label: 'Now Playing Thumbnail Small', size: 'small' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL'));
 
-	builder.registerSubscriptionFunction((updateCallback, optionalCallbacks) => controller.setNotificationCallbacks(updateCallback, optionalCallbacks, builder.deviceidentifier) );
+	builder.registerSubscriptionFunction((updateCallback, optionalCallbacks) => kodiDevice.setNotificationCallbacks(updateCallback, optionalCallbacks, builder.deviceidentifier) );
 	builder.registerInitialiseFunction(() => controller.initialise(builder.deviceidentifier));
 	builder.enableRegistration(REGISTRATION_CONFIG, { register: (credentials) => controller.register(credentials), isRegistered: (foo, bar) => controller.isRegistered(foo, bar) } );
 	builder.enableDiscovery(DISCOVERY_CONFIG, () => controller.discoverDevices());

@@ -106,7 +106,11 @@ function buildDevice() {
 }
 
 const device = buildDevice();
-kodiDevice.registerDevice(device);
+try {
+	kodiDevice.registerDevice(device);
+} catch(e) {
+	console.log('caught', e);
+}
 
 module.exports = {
   devices: [device],
