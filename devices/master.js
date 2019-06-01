@@ -13,9 +13,6 @@ const kodiCommands = require('../lib/kodiCommands');
 const controller = require('../lib/KodiController');
 const kodiDevice = new (require('../lib/KodiDevice'))('master');
 
-
-const kodiDevice = new (require('../lib/KodiDevice'))();
-
 const DEVICE_NAME = 'Kodi (Master)';
 const DEVICE_MANUFACTURER = 'XBMC';
 // FIXME: MUSICPLAYER lets me skip cabling in NEEO
