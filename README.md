@@ -53,7 +53,6 @@ Currently the code is fairly (functionally) complete. I have formalized many fea
 * Maybe a simple web GUI for customization
 * Stop communication when recipes are inactive
 * Separate devices for different profiles (Remote-only music player/radio etc.)
-* More keymap entries
 * Companion Kodi add-on for total GUI control.
 
 ## HOWTO

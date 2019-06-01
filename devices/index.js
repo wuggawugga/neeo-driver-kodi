@@ -44,6 +44,9 @@ neeoapi.discoverOneBrain(true).then((brain) => {
       }
     }
   }
+
+
+
 }).catch(error => {
     console.error('CANNOT BRAIN', error);
     process.exit(1);
@@ -102,9 +105,11 @@ function sillyWalk(recipes) {
 }
 
 module.exports = {
+/*
   devices: [
     ...master.devices,
     ...headlessAudio.devices,
     ...playerWidget.devices,
   ]
+*/
 };
