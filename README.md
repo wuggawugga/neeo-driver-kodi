@@ -55,18 +55,13 @@ Currently the code is fairly (functionally) complete. I have formalized many fea
 * Separate devices for different profiles (Remote-only music player/radio etc.)
 * Companion Kodi add-on for total GUI control.
 
-## HOWTO
+## Installation
 
-The [original instructions](https://github.com/nklerk/neeo_driver-kodi/blob/master/README.md#getting-started) are still valid (mostly).
-
-# Install Node
-# Clone or download this code
-# Unpack code and run `npm install`
-# Start with `npm start`
-
-Problems are usually fixed by restarting (Ctrl+C, npm start) and/or resetting the configuration (`npm run clearConfig`).
+ https://github.com/wuggawugga/neeo-driver-kodi/wiki/Installation
 
 ### Configuration
+
+https://github.com/wuggawugga/neeo-driver-kodi/wiki/Configuration
 
 * Important settings are all in `lib/Config.js`
 * Input mapping is done in `lib/kodiCommands.js`
