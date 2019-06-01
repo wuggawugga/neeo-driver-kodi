@@ -9,6 +9,7 @@ const neeoapi = require('neeo-sdk');
 const debug = require('debug')('neeo-driver-kodi:kodiDevice');
 const kodiCommands = require('../lib/kodiCommands');
 const controller = require('../lib/KodiController');
+const kodiDevice = new (require('../lib/KodiDevice'))('playerWidget');
 
 const DEVICE_NAME = 'Kodi (Media player)';
 const DEVICE_MANUFACTURER = 'XBMC';
@@ -75,6 +76,7 @@ function buildDevice() {
 }
 
 const device = buildDevice();
+kodiDevice.registerDevice(device);
 
 module.exports = {
   devices: [device],

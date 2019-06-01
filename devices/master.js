@@ -11,6 +11,8 @@ const neeoapi = require('neeo-sdk');
 const debug = require('debug')('neeo-driver-kodi:kodiDevice');
 const kodiCommands = require('../lib/kodiCommands');
 const controller = require('../lib/KodiController');
+const kodiDevice = new (require('../lib/KodiDevice'))('master');
+
 
 const DEVICE_NAME = 'Kodi (Master)';
 const DEVICE_MANUFACTURER = 'XBMC';
@@ -55,7 +57,7 @@ function buildDevice() {
 			debug('Button', item, 'missing');
 		}
   });
-	builder.addButtonHandler((name, deviceId) => controller.onButtonPressed(name, deviceId));
+	builder.addButtonHandler((name, deviceId) => kodiDevice.onButtonPressed(name, deviceId));
 
 	// Directories
 	builder.addDirectory({ name: 'DIRECTORY_ROOT', label: 'Library', role: 'ROOT' }, {
@@ -83,19 +85,19 @@ function buildDevice() {
 		action: (deviceId, params, directory) => controller.listAction(deviceId, 'DIRECTORY_NOW_PLAYING', params)
 	});
 
-	builder.addSlider({ name: 'SLIDER_VOLUME', label: 'Volume', range: [0, 100], unit: '%' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SLIDER_VOLUME', value), getter: (device_id) => controller.getSensorValue(device_id, 'SLIDER_VOLUME') });
-	builder.addSwitch({ name: 'SWITCH_MUTE', label: 'Mute' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_MUTE', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_MUTE') });
-	builder.addSwitch({ name: 'SWITCH_PLAYING', label: 'Playing' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_PLAYING', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_PLAYING') });
-	builder.addSwitch({ name: 'SWITCH_SHUFFLE', label: 'Shuffle' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_SHUFFLE', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_SHUFFLE') });
-	builder.addSwitch({ name: 'SWITCH_REPEAT', label: 'Repeat' }, { setter: (device_id, value) => controller.setSensorValue(device_id, 'SWITCH_REPEAT', value), getter: (device_id) => controller.getSensorValue(device_id, 'SWITCH_REPEAT') });
+	builder.addSlider({ name: 'SLIDER_VOLUME', label: 'Volume', range: [0, 100], unit: '%' }, { setter: (device_id, value) => kodiDevice.setSensorValue(device_id, 'SLIDER_VOLUME', value), getter: (device_id) => kodiDevice.getSensorValue(device_id, 'SLIDER_VOLUME') });
+	builder.addSwitch({ name: 'SWITCH_MUTE', label: 'Mute' }, { setter: (device_id, value) => kodiDevice.setSensorValue(device_id, 'SWITCH_MUTE', value), getter: (device_id) => kodiDevice.getSensorValue(device_id, 'SWITCH_MUTE') });
+	builder.addSwitch({ name: 'SWITCH_PLAYING', label: 'Playing' }, { setter: (device_id, value) => kodiDevice.setSensorValue(device_id, 'SWITCH_PLAYING', value), getter: (device_id) => kodiDevice.getSensorValue(device_id, 'SWITCH_PLAYING') });
+	builder.addSwitch({ name: 'SWITCH_SHUFFLE', label: 'Shuffle' }, { setter: (device_id, value) => kodiDevice.setSensorValue(device_id, 'SWITCH_SHUFFLE', value), getter: (device_id) => kodiDevice.getSensorValue(device_id, 'SWITCH_SHUFFLE') });
+	builder.addSwitch({ name: 'SWITCH_REPEAT', label: 'Repeat' }, { setter: (device_id, value) => kodiDevice.setSensorValue(device_id, 'SWITCH_REPEAT', value), getter: (device_id) => kodiDevice.getSensorValue(device_id, 'SWITCH_REPEAT') });
 
-	builder.addTextLabel({ name: 'LABEL_NOW_PLAYING_CAPTION', label: 'Now Playing Title', isLabelVisible: false }, (device_id) => controller.getTextLabel(device_id, 'LABEL_NOW_PLAYING_CAPTION') );
-	builder.addTextLabel({ name: 'LABEL_NOW_PLAYING_DESCRIPTION', label: 'Now Playing Description', isLabelVisible: false }, (device_id) => controller.getTextLabel(device_id, 'LABEL_NOW_PLAYING_DESCRIPTION') );
+	builder.addTextLabel({ name: 'LABEL_NOW_PLAYING_CAPTION', label: 'Now Playing Title', isLabelVisible: false }, (device_id) => kodiDevice.getTextLabel(device_id, 'LABEL_NOW_PLAYING_CAPTION') );
+	builder.addTextLabel({ name: 'LABEL_NOW_PLAYING_DESCRIPTION', label: 'Now Playing Description', isLabelVisible: false }, (device_id) => kodiDevice.getTextLabel(device_id, 'LABEL_NOW_PLAYING_DESCRIPTION') );
 
-	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE', label: 'Now Playing Thumbnail Large', size: 'large' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE'));
-	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL', label: 'Now Playing Thumbnail Small', size: 'small' }, (device_id) => controller.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL'));
+	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE', label: 'Now Playing Thumbnail Large', size: 'large' }, (device_id) => kodiDevice.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_LARGE'));
+	builder.addImageUrl({ name: 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL', label: 'Now Playing Thumbnail Small', size: 'small' }, (device_id) => kodiDevice.getImageUrl(device_id, 'IMAGE_NOW_PLAYING_THUMBNAIL_SMALL'));
 
-	builder.registerSubscriptionFunction((updateCallback, optionalCallbacks) => controller.setNotificationCallbacks(updateCallback, optionalCallbacks, builder.deviceidentifier) );
+	builder.registerSubscriptionFunction((updateCallback, optionalCallbacks) => kodiDevice.setNotificationCallbacks(updateCallback, optionalCallbacks, builder.deviceidentifier) );
 	builder.registerInitialiseFunction(() => controller.initialise(builder.deviceidentifier));
 	builder.enableRegistration(REGISTRATION_CONFIG, { register: (credentials) => controller.register(credentials), isRegistered: (foo, bar) => controller.isRegistered(foo, bar) } );
 	builder.enableDiscovery(DISCOVERY_CONFIG, () => controller.discoverDevices());
@@ -104,6 +106,7 @@ function buildDevice() {
 }
 
 const device = buildDevice();
+kodiDevice.registerDevice(device);
 
 module.exports = {
   devices: [device],

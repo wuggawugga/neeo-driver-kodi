@@ -16,9 +16,9 @@ const http = require('http');
 const kodiDiscovery = require('../lib/kodiDiscovery');
 const httpInterface = require('../lib/httpInterface');
 
-const kodiDevice = require('./master');
-const kodiDevice = require('./headlessAudio');
-const kodiDevice = require('./playerWidget');
+const master = require('./master');
+const headlessAudio = require('./headlessAudio');
+const playerWidget = require('./playerWidget');
 
 var instances = conf.get('kodi_instances');
 
@@ -44,6 +44,9 @@ neeoapi.discoverOneBrain(true).then((brain) => {
       }
     }
   }
+
+
+
 }).catch(error => {
     console.error('CANNOT BRAIN', error);
     process.exit(1);
@@ -102,7 +105,11 @@ function sillyWalk(recipes) {
 }
 
 module.exports = {
+/*
   devices: [
-    ...kodiDevice.devices
+    ...master.devices,
+    ...headlessAudio.devices,
+    ...playerWidget.devices,
   ]
+*/
 };
