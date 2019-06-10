@@ -22,7 +22,7 @@ const playerWidget = require('./playerWidget');
 
 var instances = conf.get('kodi_instances');
 
-neeoapi.discoverOneBrain(true).then((brain) => {
+neeoapi.discoverOneBrain(false).then((brain) => {
   conf.set('neeo.brain', brain);
 
   // This is going to get messy...
@@ -46,8 +46,8 @@ neeoapi.discoverOneBrain(true).then((brain) => {
     }
   }
 }).catch(error => {
-    console.error('CANNOT BRAIN', error);
-    process.exit(1);
+    console.error('CANNOT BRAIN', error.message);
+//    process.exit(1);
 });
 
 // This is a terrible way to get adapterName for each device
@@ -103,11 +103,9 @@ function sillyWalk(recipes) {
 }
 
 module.exports = {
-/*
   devices: [
     ...master.devices,
     ...headlessAudio.devices,
     ...playerWidget.devices,
   ]
-*/
 };

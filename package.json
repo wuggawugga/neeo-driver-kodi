@@ -2,7 +2,7 @@
   "name": "neeo-driver-kodi",
   "version": "0.0.8",
   "description": "Kodi driver for NEEO",
-  "main": "index.js",
+  "main": "devices/index.js",
   "author": "WuggaWugga",
   "license": "MIT",
   "private": false,
