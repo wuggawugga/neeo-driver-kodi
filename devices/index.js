@@ -24,6 +24,7 @@ var instances = conf.get('kodi_instances');
 
 neeoapi.discoverOneBrain(true).then((brain) => {
   conf.set('neeo.brain', brain);
+
   // This is going to get messy...
   neeoapi.getRecipes(brain).then((recipes) => {
     sillyWalk(recipes);
@@ -44,9 +45,6 @@ neeoapi.discoverOneBrain(true).then((brain) => {
       }
     }
   }
-
-
-
 }).catch(error => {
     console.error('CANNOT BRAIN', error);
     process.exit(1);
